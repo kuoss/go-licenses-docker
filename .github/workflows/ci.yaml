@@ -14,8 +14,10 @@ jobs:
     steps:
     - id: meta
       run: |
-        echo "TAG=${GITHUB_REF#refs/tags/}"         >> $GITHUB_OUTPUT
-        echo "IMAGE=ghcr.io/kuoss/go-licenses:$TAG" >> $GITHUB_OUTPUT
+        TAG=${GITHUB_REF#refs/tags/}
+        IMAGE=ghcr.io/kuoss/go-licenses:$TAG
+        echo "TAG=$TAG"     >> $GITHUB_OUTPUT
+        echo "IMAGE=$IMAGE" >> $GITHUB_OUTPUT
 
     - id: check
       run: |
