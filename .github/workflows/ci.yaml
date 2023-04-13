@@ -12,20 +12,6 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: google/go-licenses
-          ref: ${{ steps.extract_tag.outputs.tag }}
-          
-      - name: Build image
-        run: |
-          IMAGE=ghcr.io/kuoss/go-licenses:${GITHUB_REF##*/}
-          docker build -t $IMAGE .
-
-      - name: Log in to registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-          
-      - name: Push image
-        run: |
-          IMAGE=ghcr.io/kuoss/go-licenses:${GITHUB_REF##*/}
-          docker push $IMAGE
+    - run: |
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        echo VERSION
