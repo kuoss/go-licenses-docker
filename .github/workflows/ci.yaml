@@ -1,16 +1,19 @@
+name: ci
 on:
   push:
     tags:        
-    - v*
+    - 'v*'
 
 jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
 
-- name: Extract branch name
-  shell: bash
-  run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
-  id: extract_branch
+    - id: extract_branch
+      shell: bash
+      run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >>$GITHUB_OUTPUT
 
-- uses: actions/checkout@v3
-  with:
-    repository: google/go-licenses
-    ref: ${{ steps.extract_branch.outputs.branch }}
+    - uses: actions/checkout@v3
+      with:
+        repository: google/go-licenses
+        ref: ${{ steps.extract_branch.outputs.branch }}
