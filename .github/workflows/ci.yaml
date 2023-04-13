@@ -12,6 +12,24 @@ jobs:
       contents: read
 
     steps:
-    - run: |
-        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-        echo $VERSION
+    - id: meta
+      run: |
+        echo "tag=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')" >>$GITHUB_OUTPUT
+        echo "image=ghcr.io/kuoss/go-licenses:$tag"                       >>$GITHUB_OUTPUT
+
+    - uses: actions/checkout@v3
+      with:
+        repository: google/go-licenses
+        ref: ${{ steps.meta.outputs.tag }}
+
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+    - name: Build image
+      run: |
+        docker build . -t ${{ steps.meta.outputs.image }}
+
+    - name: Push image
+      run: |
+        docker push ${{ steps.meta.outputs.image }}
+
