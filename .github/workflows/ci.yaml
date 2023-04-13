@@ -13,6 +13,7 @@ jobs:
 
     steps:
     - id: meta
+      shell: bash
       run: |
         echo "tag=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')" >>$GITHUB_OUTPUT
         echo "image=ghcr.io/kuoss/go-licenses:$tag"                       >>$GITHUB_OUTPUT
