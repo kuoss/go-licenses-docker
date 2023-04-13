@@ -14,4 +14,4 @@ jobs:
     steps:
     - run: |
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-        echo VERSION
+        echo $VERSION
