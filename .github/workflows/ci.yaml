@@ -19,7 +19,19 @@ jobs:
         echo "TAG=$TAG"     >> $GITHUB_OUTPUT
         echo "IMAGE=$IMAGE" >> $GITHUB_OUTPUT
 
-    - id: check
+    - uses: actions/checkout@v3
+      with:
+        repository: google/go-licenses
+        ref: ${{ steps.meta.outputs.TAG }}
+
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+    - name: Build image
       run: |
-        echo " ${{ steps.meta.outputs.TAG }}"
-        echo " ${{ steps.meta.outputs.IMAGE }}"
+        docker build . -t ${{ steps.meta.outputs.IMAGE }}
+
+    - name: Push image
+      run: |
+        docker push ${{ steps.meta.outputs.IMAGE }}
+
