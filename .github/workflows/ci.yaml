@@ -17,19 +17,7 @@ jobs:
         echo "TAG=${GITHUB_REF#refs/tags/}"         >> $GITHUB_OUTPUT
         echo "IMAGE=ghcr.io/kuoss/go-licenses:$TAG" >> $GITHUB_OUTPUT
 
-    - uses: actions/checkout@v3
-      with:
-        repository: google/go-licenses
-        ref: ${{ steps.meta.outputs.TAG }}
-
-    - name: Log in to registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-
-    - name: Build image
+    - id: check
       run: |
-        docker build . -t ${{ steps.meta.outputs.IMAGE }}
-
-    - name: Push image
-      run: |
-        docker push ${{ steps.meta.outputs.IMAGE }}
-
+        echo " ${{ steps.meta.outputs.TAG }}"
+        echo " ${{ steps.meta.outputs.IMAGE }}"
