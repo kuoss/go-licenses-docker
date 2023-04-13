@@ -15,8 +15,8 @@ jobs:
     - id: meta
       shell: bash
       run: |
-        echo "tag=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')" >>$GITHUB_OUTPUT
-        echo "image=ghcr.io/kuoss/go-licenses:$tag"                       >>$GITHUB_OUTPUT
+        echo "tag=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')" >>$GITHUB_OUTPUT
+        echo "image=ghcr.io/kuoss/go-licenses:$tag"                     >>$GITHUB_OUTPUT
 
     - uses: actions/checkout@v3
       with:
