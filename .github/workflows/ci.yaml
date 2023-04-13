@@ -34,4 +34,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/go-licenses:${{ steps.extract_branch.outputs.branch }}
+          tags: ghcr.io/kuoss/go-licenses:${{ steps.extract_branch.outputs.branch }}
